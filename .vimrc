@@ -26,8 +26,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
 
-call neobundle#end()
-
 " Required:
 NeoBundle 'Shougo/unite.vim.git'
 NeoBundle 'Shougo/vimproc.vim'
@@ -38,6 +36,8 @@ filetype plugin indent on
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
+
+call neobundle#end()
 
 """ unite.vim
 " ファイル検索時に絶対パスを表示
@@ -97,6 +97,6 @@ nnoremap ' :
 " ステータスラインを常に表示
 set laststatus=2
 
-syntax enable
+" カラーのテーマを指定
 set background=dark
 colorscheme solarized
