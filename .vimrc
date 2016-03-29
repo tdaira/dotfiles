@@ -28,8 +28,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Required:
 NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'szw/vim-tags'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'violetyk/cake.vim'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'osyo-manga/vim-anzu'
 
 filetype plugin indent on
 
@@ -39,30 +46,11 @@ NeoBundleCheck
 
 call neobundle#end()
 
-""" unite.vim
-" ファイル検索時に絶対パスを表示
-let my_absolute_path = {
-            \ 'is_selectable' : 1,
-            \ }
-function! my_absolute_path.func(candidates)
-    let candidate = a:candidates[0]
-    let path      = candidate.action__directory
-    if candidate.kind == 'directory'
-        let path = fnamemodify(path . '/../', ':p')
-    else
-        let path = fnamemodify(path, ':p:h') . '/'
-    end
-    call unite#start([['file'], ['file/new']],unite#get_context())
-    call unite#mappings#narrowing(path)
-endfunction
-call unite#custom_action('file', 'absolute_path', my_absolute_path)
-unlet my_absolute_path
-inoremap <buffer><expr> <C-@> unite#do_action('absolute_path')
-" 入力モードで開始する
-let g:unite_enable_start_insert=1
-" コマンドのショートカットを作成
-cnoremap uf Unite<space>file
-cnoremap ub Unite<space>buffer
+" カラーシンタックスを有効にする
+syntax on
+
+" クリップボード
+set clipboard=unnamed,autoselect
 
 " escが遠いので代用する。
 noremap <C-j> <esc>
@@ -100,3 +88,174 @@ set laststatus=2
 " カラーのテーマを指定
 set background=dark
 colorscheme solarized
+
+"" unite.vim 関係
+" 入力モードで開始する
+let g:unite_enable_start_insert=1
+" バッファ一覧
+nnoremap <C-l>b :<C-u>Unite buffer<CR>
+" ファイル一覧
+nnoremap <C-l>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+" レジスタ一覧
+nnoremap <C-l>r :<C-u>Unite -buffer-name=register register<CR>
+" 最近使用したファイル一覧
+nnoremap <C-l>m :<C-u>Unite file_mru<CR>
+" 常用セット
+nnoremap <C-l>u :<C-u>Unite buffer file_mru<CR>
+" 全部乗せ
+nnoremap <C-l>a :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+" ウィンドウを分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-k> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-k> unite#do_action('split')
+" ウィンドウを縦に分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-h> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-h> unite#do_action('vsplit')
+"unite.vimを開いている間のキーマッピング
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+    " ESCでuniteを終了
+    nmap <buffer> <ESC><ESC> <Plug>(unite_exit)
+endfunction"}}}
+
+" バックスペースが効かなくなる問題を解決
+set backspace=indent,eol,start
+
+" 拡張子で読み込みタグ変更
+au BufNewFile,BufRead * set tags+=$HOME/tags.tags
+
+" vim-tags
+au BufNewFile,BufRead *.rb let g:vim_tags_project_tags_command = "ctags -f --languages=c,c++,Ruby,PHP ~/tags.tags `pwd` 2>/dev/null &"
+" tagsジャンプの時に複数ある時は一覧表示
+nnoremap <C-]> g<C-]>
+" tagsジャンプのショートカット
+nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+"" lightline
+let g:lightline = {
+            \ 'colorscheme': 'default',
+            \ 'mode_map': {'c': 'NORMAL'},
+            \ 'active': {
+            \   'left': [ ['mode', 'paste'], ['fugitive', 'filename', 'cakephp', 'currenttag', 'anzu'] ]
+            \ },
+            \ 'component': {
+            \   'lineinfo': ' %3l:%-2v',
+            \ },
+            \ 'component_function': {
+            \   'modified': 'MyModified',
+            \   'readonly': 'MyReadonly',
+            \   'fugitive': 'MyFugitive',
+            \   'filename': 'MyFilename',
+            \   'fileformat': 'MyFileformat',
+            \   'filetype': 'MyFiletype',
+            \   'fileencoding': 'MyFileencoding',
+            \   'mode': 'MyMode',
+            \   'anzu': 'anzu#search_status',
+            \   'currenttag': 'MyCurrentTag',
+            \   'cakephp': 'MyCakephp',
+            \ }
+            \ }
+if &background ==# 'light'
+    let g:lightline#colorscheme#solarized#palette = g:lightline#colorscheme#solarized_light#palette
+else
+    let g:lightline#colorscheme#solarized#palette = g:lightline#colorscheme#solarized_dark#palette
+endif
+
+
+function! MyModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? ' ' : ''
+endfunction
+
+function! MyFilename()
+    return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+                \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+                \  &ft == 'unite' ? unite#get_status_string() :
+                \  &ft == 'vimshell' ? vimshell#get_status_string() :
+                \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+                \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+    try
+        if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head())
+            return ' ' . fugitive#head()
+        endif
+    catch
+    endtry
+    return ''
+endfunction
+
+function! MyFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+    return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+    return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! MyCurrentTag()
+    return tagbar#currenttag('%s', '')
+endfunction
+
+function! MyCakephp()
+    return exists('*cake#buffer') ? cake#buffer('type') : ''
+endfunction
+
+"" tag関連
+" Anywhere SID.
+function! s:SID_PREFIX()
+    return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+
+" Set tabline.
+function! s:my_tabline()  "{{{
+    let s = ''
+    for i in range(1, tabpagenr('$'))
+        let bufnrs = tabpagebuflist(i)
+        let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+        let no = i  " display 0-origin tabpagenr.
+        let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+        let title = fnamemodify(bufname(bufnr), ':t')
+        let title = '[' . title . ']'
+        let s .= '%'.i.'T'
+        let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+        let s .= no . ':' . title
+        let s .= mod
+        let s .= '%#TabLineFill# '
+    endfor
+    let s .=
+    '%#TabLineFill#%T%=%#TabLine#'
+    return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+"常にタブラインを表示
+set showtabline=2
+
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    t [Tag]
+" Tab jump
+" t1で1番左のタブ、t2で1番左から2番目のタブにジャンプ
+for n in range(1, 9)
+    execute 'nnoremap <silent> [Tag]'.n ':<C-u>tabnext'.n.'<CR>'
+endfor
+
+" tc 新しいタブを一番右に作る
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tx タブを閉じる
+map <silent> [Tag]x :tabclose<CR>
+" tn 次のタブ
+map <silent> [Tag]n :tabnext<CR>
+" tp 前のタブ
+map <silent> [Tag]p :tabprevious<CR>

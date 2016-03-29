@@ -1,0 +1,11 @@
+cake.vim
+lightline.vim
+neobundle.vim
+neomru.vim
+tagbar
+unite.vim
+vim-anzu
+vim-colors-solarized
+vim-fugitive
+vim-tags
+vimproc.vim
