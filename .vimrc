@@ -154,12 +154,6 @@ let g:lightline = {
             \   'cakephp': 'MyCakephp',
             \ }
             \ }
-if &background ==# 'light'
-    let g:lightline#colorscheme#solarized#palette = g:lightline#colorscheme#solarized_light#palette
-else
-    let g:lightline#colorscheme#solarized#palette = g:lightline#colorscheme#solarized_dark#palette
-endif
-
 
 function! MyModified()
     return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -212,33 +206,7 @@ function! MyCakephp()
     return exists('*cake#buffer') ? cake#buffer('type') : ''
 endfunction
 
-"" tag関連
-" Anywhere SID.
-function! s:SID_PREFIX()
-    return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
-endfunction
-
-" Set tabline.
-function! s:my_tabline()  "{{{
-    let s = ''
-    for i in range(1, tabpagenr('$'))
-        let bufnrs = tabpagebuflist(i)
-        let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
-        let no = i  " display 0-origin tabpagenr.
-        let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
-        let title = fnamemodify(bufname(bufnr), ':t')
-        let title = '[' . title . ']'
-        let s .= '%'.i.'T'
-        let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
-        let s .= no . ':' . title
-        let s .= mod
-        let s .= '%#TabLineFill# '
-    endfor
-    let s .=
-    '%#TabLineFill#%T%=%#TabLine#'
-    return s
-endfunction "}}}
-let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+"" tab関連
 "常にタブラインを表示
 set showtabline=2
 
