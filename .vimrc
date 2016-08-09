@@ -37,6 +37,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'violetyk/cake.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'osyo-manga/vim-anzu'
+NeoBundle 'Shougo/unite.vim.git'
 
 filetype plugin indent on
 
