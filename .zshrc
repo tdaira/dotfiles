@@ -92,3 +92,8 @@ if [[ ! -n $TMUX ]]; then
   ID="`echo $ID | $PERCOL | cut -d: -f1`"
   tmux attach-session -t "$ID"
 fi
+
+# pyenv
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+eval "$(pyenv init -)"
