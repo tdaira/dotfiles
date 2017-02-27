@@ -61,8 +61,6 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
 alias la="ls -la"
 alias gor="go run"
 alias gog="go get"
-alias glog="git log"
-alias ggraph="git log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 
 # color setting
 autoload -U compinit
@@ -97,3 +95,7 @@ fi
 export PYENV_ROOT=$HOME/.pyenv
 export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init -)"
+
+# oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
+plugins=(git)
