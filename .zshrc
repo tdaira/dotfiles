@@ -61,6 +61,7 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
 alias la="ls -la"
 alias gor="go run"
 alias gog="go get"
+alias vi="vim"
 
 # color setting
 autoload -U compinit
@@ -96,6 +97,5 @@ export PYENV_ROOT=$HOME/.pyenv
 export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init -)"
 
-# oh-my-zsh
-export ZSH=$HOME/.oh-my-zsh
-plugins=(git)
+# git aliases
+source .zsh-plugins/git.plugin.zsh
