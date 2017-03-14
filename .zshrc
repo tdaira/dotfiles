@@ -98,4 +98,4 @@ export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init -)"
 
 # git aliases
-source .zsh-plugins/git.plugin.zsh
+source ~/.zsh-plugins/git.plugin.zsh
