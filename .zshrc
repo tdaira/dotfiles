@@ -99,3 +99,4 @@ eval "$(pyenv init -)"
 
 # git aliases
 source ~/.zsh-plugins/git.plugin.zsh
+source ~/.zsh-plugins/lib/git.zsh
