@@ -5,6 +5,12 @@ export PATH=$HOME/go/bin:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin
 
+# read external plugins
+for f in ~/.zsh/[0-9]*.(sh|zsh)
+do
+    source "$f"
+done
+
 # use color
 autoload -Uz colors
 colors
@@ -96,7 +102,3 @@ fi
 export PYENV_ROOT=$HOME/.pyenv
 export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init -)"
-
-# git aliases
-source ~/.zsh-plugins/git.plugin.zsh
-source ~/.zsh-plugins/lib/git.zsh
