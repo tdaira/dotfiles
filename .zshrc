@@ -11,6 +11,10 @@ do
     source "$f"
 done
 
+# history key mapping
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
 # use color
 autoload -Uz colors
 colors
