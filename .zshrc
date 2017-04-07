@@ -5,12 +5,6 @@ export PATH=$HOME/go/bin:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin
 
-# read external plugins
-for f in ~/.zsh/[0-9]*.(sh|zsh)
-do
-    source "$f"
-done
-
 # history key mapping
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
@@ -72,6 +66,8 @@ alias la="ls -la"
 alias gor="go run"
 alias gog="go get"
 alias vi="vim"
+alias grepd="grep -r "
+alias grepd='(){ grep -r $1 ./ }'
 
 # color setting
 autoload -U compinit
@@ -106,3 +102,9 @@ fi
 export PYENV_ROOT=$HOME/.pyenv
 export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init -)"
+
+# read external plugins
+for f in ~/.zsh/[0-9]*.(sh|zsh)
+do
+    source "$f"
+done
