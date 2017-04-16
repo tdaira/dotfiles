@@ -2,25 +2,20 @@ set mouse=a
 set ttymouse=xterm2
 set number
 
-" Note: Skip initialization for vim-tiny or vim-small.
+" neobundle setting
+" Skip initialization for vim-tiny or vim-small.
 if 0 | endif
-
 if &compatible
   set nocompatible               " Be iMproved
 endif
-
-" Required:
 set runtimepath+=~/.vim/bundle/neobundle.vim/
-
-" Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
-
 " Let NeoBundle manage NeoBundle
-" Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'rking/ag.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'szw/vim-tags'
 NeoBundle 'itchyny/lightline.vim'
@@ -28,18 +23,17 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'violetyk/cake.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'osyo-manga/vim-anzu'
-NeoBundle 'Shougo/unite.vim.git'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'elzr/vim-json'
-
 call neobundle#end()
-
-" Required:
 filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
 NeoBundleCheck
+
+" Change the cursor shape
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
 
 " disable elzr/vim-json syntax_conceal
 let g:vim_json_syntax_conceal = 0
@@ -54,7 +48,7 @@ syntax on
 " クリップボード
 set clipboard=unnamed,autoselect
 
-" escが遠いので代用する。
+" escが遠いので代用
 noremap <C-j> <esc>
 noremap! <C-j> <esc>
 
@@ -80,7 +74,8 @@ let g:unite_enable_start_insert=1
 " バッファ一覧
 nnoremap <C-k>b :<C-u>Unite buffer<CR>
 " ファイル一覧
-nnoremap <C-k>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+" nnoremap <C-k>f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <C-k>f :<C-u>VimFiler<CR>
 " レジスタ一覧
 nnoremap <C-k>r :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
@@ -95,11 +90,11 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-v> unite#do_action('split
 " ウィンドウを縦に分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-h> unite#do_action('vsplit')
 au FileType unite inoremap <silent> <buffer> <expr> <C-h> unite#do_action('vsplit')
-"unite.vimを開いている間のキーマッピング
+" unite.vimを開いている間のキーマッピング
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
-    " ESCでuniteを終了
-    nmap <buffer> <ESC><ESC> <Plug>(unite_exit)
+    " <C-j>でuniteを終了
+    nmap <buffer> <C-j> <Plug>(unite_exit)
 endfunction"}}}
 
 " バックスペースが効かなくなる問題を解決
@@ -212,3 +207,17 @@ map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 " tp 前のタブ
 map <silent> [Tag]p :tabprevious<CR>
+
+" 画面分割
+nnoremap ss :<C-u>sp<CR>
+nnoremap sv :<C-u>vs<CR>
+nnoremap s <Nop>
+nnoremap sh <C-w>h
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sw <C-w>w
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sH <C-w>H
