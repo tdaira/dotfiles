@@ -17,7 +17,6 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'szw/vim-tags'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'violetyk/cake.vim'
@@ -107,6 +106,7 @@ let g:auto_ctags_directory_list = ['.git', '.svn']
 set tags+=.svn/tags
 " tagsファイルの命名設定
 let g:auto_ctags_filetype_mode = 1
+let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
 
