@@ -3,6 +3,14 @@ export PATH=/usr/local:$PATH
 export PATH=/usr/local/go/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
 export GOPATH=$HOME/go
+export PYENV_ROOT="${HOME}/.pyenv"
+export PATH="${PYENV_ROOT}/bin:$PATH"
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+# Python
+export PYENV_ROOT=${HOME}/.pyenv
+export PATH=${PYENV_ROOT}/bin:$PATH
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # history key mapping
 bindkey -M emacs '^P' history-substring-search-up
@@ -53,7 +61,6 @@ zle -N peco-select-history
 bindkey '^rh' peco-select-history
 zle -N peco-cdr
 bindkey '^rd' peco-cdr
-
 # cdr, add-zsh-hook を有効にする
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
@@ -143,11 +150,6 @@ if [[ ! -n $TMUX ]]; then
   ID="`echo $ID | $PERCOL | cut -d: -f1`"
   tmux attach-session -t "$ID"
 fi
-
-# pyenv
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval "$(pyenv init -)"
 
 # read external plugins
 for f in ~/.zsh/[0-9]*.(sh|zsh)
