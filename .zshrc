@@ -4,6 +4,21 @@ export PATH=/usr/local/go/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
 export GOPATH=$HOME/go
 
+# pyenv
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+eval "$(pyenv init -)"
+
+# alias
+alias la="ls -la"
+alias gor="go run"
+alias gog="go get"
+alias vi="vim"
+alias grepd="grep -r "
+alias grepd='(){ grep -r $1 ./ }'
+alias rm='rmtrash'
+alias mv='mv -i'
+
 # history key mapping
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
@@ -107,16 +122,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
                    /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 
-# alias
-alias la="ls -la"
-alias gor="go run"
-alias gog="go get"
-alias vi="vim"
-alias grepd="grep -r "
-alias grepd='(){ grep -r $1 ./ }'
-alias rm='rmtrash'
-alias mv='mv -i'
-
 # color setting
 autoload -U compinit
 compinit
@@ -126,14 +131,11 @@ alias ls="ls -GF"
 alias gls="gls --color"
 zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
 
-# directory setting for tmux
-show-current-dir-as-window-name() {
-    tmux set-window-option window-status-current-format " #I ${PWD:t} " > /dev/null
-    tmux set-window-option window-status-format " #I ${PWD:t} " > /dev/null
-}
-show-current-dir-as-window-name
-autoload -Uz add-zsh-hook
-add-zsh-hook chpwd show-current-dir-as-window-name
+# read external plugins
+for f in ~/.zsh/[0-9]*.(sh|zsh)
+do
+    source "$f"
+done
 
 # auto start tmux
 if [[ ! -n $TMUX ]]; then
@@ -146,13 +148,3 @@ if [[ ! -n $TMUX ]]; then
   tmux attach-session -t "$ID"
 fi
 
-# pyenv
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval "$(pyenv init -)"
-
-# read external plugins
-for f in ~/.zsh/[0-9]*.(sh|zsh)
-do
-    source "$f"
-done
