@@ -14,7 +14,6 @@ set clipboard=unnamedplus
 
 " Remap escape
 noremap <C-[> <esc>
-noremap! <C-[> <esc>
 
 " Tab with 4 spaces.
 set tabstop=4
