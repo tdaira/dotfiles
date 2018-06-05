@@ -98,24 +98,6 @@ bindkey -e
 
 # completion
 autoload -U compinit; compinit -C
-
-### 補完方法毎にグループ化する。
-zstyle ':completion:*' format '%B%F{blue}%d%f%b'
-zstyle ':completion:*' group-name ''
-### 補完侯補をメニューから選択する。
-### select=2: 補完候補を一覧から選択する。補完候補が2つ以上なければすぐに補完する。
-zstyle ':completion:*:default' menu select=2
-### 補完候補に色を付ける。
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-### 補完候補がなければより曖昧に候補を探す。
-### m:{a-z}={A-Z}: 小文字を大文字に変えたものでも補完する。
-### r:|[._-]=*: 「.」「_」「-」の前にワイルドカード「*」があるものとして補完する。
-#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z} r:|[._-]=*'
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-zstyle ':completion:*' keep-prefix
-zstyle ':completion:*' recent-dirs-insert both
-
 # not case sensitive
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
