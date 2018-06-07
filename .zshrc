@@ -1,8 +1,8 @@
 # set env
 export PATH=/usr/local:$PATH
-export PATH=/usr/local/go/bin:$PATH
-export PATH=$HOME/go/bin:$PATH
-export GOPATH=$HOME/go
+export PATH=/usr/local/programs/bin:$PATH
+export PATH=$HOME/programs/bin:$PATH
+export GOPATH=$HOME/programs
 
 # pyenv
 export PYENV_ROOT=$HOME/.pyenv
