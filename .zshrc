@@ -81,7 +81,8 @@ zstyle ':chpwd:*' recent-dirs-file "$HOME/.chpwd-recent-dirs"
 zstyle ':chpwd:*' recent-dirs-pushd true
 
 # prompt
-PROMPT="%{$fg[green]%}[%n %~] %{$reset_color%}"
+PROMPT="%{$fg[green]%}[%n %(5~,%-2~/.../%2~,%~)] %{$reset_color%}"
+
 # write git info on right side
 autoload -Uz vcs_info
 setopt prompt_subst
