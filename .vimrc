@@ -10,7 +10,11 @@ set spelllang=en,cjk
 syntax on
 
 " Enable clipboard
-set clipboard=unnamedplus
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 
 " Remap escape
 noremap <C-[> <esc>
