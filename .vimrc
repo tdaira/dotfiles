@@ -2,6 +2,9 @@ set mouse=a
 set ttymouse=xterm2
 set number
 
+" Set default encoding
+set encoding=utf-8
+
 " Spell check
 set spell
 set spelllang=en,cjk
