@@ -2,6 +2,9 @@ set mouse=a
 set ttymouse=xterm2
 set number
 
+" Backspace delete options
+set backspace=indent,eol,start
+
 " Set default encoding
 set encoding=utf-8
 
