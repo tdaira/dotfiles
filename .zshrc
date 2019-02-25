@@ -4,11 +4,6 @@ export PATH=/usr/local/programs/bin:$PATH
 export PATH=$HOME/programs/bin:$PATH
 export GOPATH=$HOME/programs
 
-# pyenv
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval "$(pyenv init -)"
-
 # Alias
 alias ls="ls --color"
 alias la="ls -la"
