@@ -5,14 +5,10 @@ export PATH=$HOME/programs/bin:$PATH
 export GOPATH=$HOME/programs
 
 # Alias
-alias ls="ls --color"
+alias ls="ls -G"
 alias la="ls -la"
-alias gor="go run"
-alias gog="go get"
 alias vi="vim"
-alias grepd="grep -r "
-alias grepd='(){ grep -r $1 ./ }'
-alias rm='rmtrash'
+alias rm='trash'
 alias mv='mv -i'
 
 # History key mapping
@@ -62,14 +58,3 @@ for f in ~/.zsh/[0-9]*.(sh|zsh)
 do
     source "$f"
 done
-
-# Auto start tmux
-if [[ ! -n $TMUX ]]; then
-  # get the IDs
-  ID="`tmux list-sessions`"
-  if [[ -z "$ID" ]]; then
-    tmux new-session
-  fi
-  ID="`echo $ID | $PERCOL | cut -d: -f1`"
-  tmux attach-session -t "$ID"
-fi
