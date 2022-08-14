@@ -9,8 +9,11 @@ set backspace=indent,eol,start
 set encoding=utf-8
 
 " Spell check
-set spell
-set spelllang=en,cjk
+" set spell
+" set spelllang=en,cjk
+
+" Set color scheme
+colorscheme iceberg
 
 " Enable syntax color
 syntax on
@@ -34,10 +37,3 @@ set shiftwidth=4
 " Show status bar every time
 set laststatus=2
 
-" Add plugin.
-call plug#begin('~/.vim/plugged')
-Plug 'micha/vim-colors-solarized'
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-
-call plug#end()
