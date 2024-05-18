@@ -12,6 +12,13 @@ git clone git@github.com:tdaira/dotfiles.git
 cp -r ./dotfiles/.* ./
 ```
 
+Download fzf.
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install fzf
+```
+
 Download color scheme of iTerm.
 
 ```sh
