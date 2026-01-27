@@ -1,7 +1,15 @@
 " Plugin manager (vim-plug)
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
+
+" Gutentags settings (auto-generate tags for function jump)
+let g:gutentags_ctags_executable = '/opt/homebrew/bin/ctags'
+let g:gutentags_cache_dir = '~/.cache/vim/tags'
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
 
 " Git diff sign column settings
 set signcolumn=yes
