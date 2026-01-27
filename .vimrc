@@ -39,10 +39,10 @@ let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_document_code_action_signs_enabled = 0
 
-" Auto-close location list after selecting an entry
+" Auto-close quickfix/location list after selecting an entry
 augroup auto_close_loclist
   autocmd!
-  autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
+  autocmd FileType qf nnoremap <buffer> <silent> <CR> <CR>:cclose<CR>:lclose<CR>
 augroup END
 
 " Git diff sign column settings
