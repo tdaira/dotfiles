@@ -40,6 +40,7 @@ augroup END
 " Git diff sign column settings
 set signcolumn=yes
 let g:gitgutter_terminal_reports_focus = 0
+let g:gitgutter_highlight_lines = 1
 augroup gitgutter_custom
   autocmd!
   autocmd VimEnter * autocmd! gitgutter CursorHold,CursorHoldI
