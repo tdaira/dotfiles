@@ -1,5 +1,18 @@
+" Plugin manager (vim-plug)
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
+call plug#end()
+
+" Git diff sign column settings
+set signcolumn=yes
+let g:gitgutter_terminal_reports_focus = 0
+augroup gitgutter_custom
+  autocmd!
+  autocmd VimEnter * autocmd! gitgutter CursorHold,CursorHoldI
+  autocmd BufReadPost,BufWritePost * GitGutter
+augroup END
+
 set mouse=a
-set ttymouse=xterm2
 set number
 
 " Backspace delete options
@@ -19,14 +32,13 @@ colorscheme iceberg
 syntax on
 
 " Enable clipboard
-if system('uname -s') == "Darwin\n"
-  set clipboard=unnamed "OSX
-else
-  set clipboard=unnamedplus "Linux
+if has('clipboard')
+  if system('uname -s') == "Darwin\n"
+    set clipboard=unnamed "OSX
+  else
+    set clipboard=unnamedplus "Linux
+  endif
 endif
-
-" Remap escape
-noremap <C-[> <esc>
 
 " Tab with 4 spaces
 set tabstop=4
