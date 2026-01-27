@@ -5,7 +5,9 @@ call plug#end()
 
 " Git diff sign column settings
 set signcolumn=yes
-set updatetime=100
+let g:gitgutter_terminal_reports_focus = 0
+autocmd! gitgutter CursorHold,CursorHoldI
+autocmd BufReadPost,BufWritePost * GitGutter
 
 set mouse=a
 set number
