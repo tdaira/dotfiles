@@ -6,8 +6,11 @@ call plug#end()
 " Git diff sign column settings
 set signcolumn=yes
 let g:gitgutter_terminal_reports_focus = 0
-autocmd! gitgutter CursorHold,CursorHoldI
-autocmd BufReadPost,BufWritePost * GitGutter
+augroup gitgutter_custom
+  autocmd!
+  autocmd VimEnter * autocmd! gitgutter CursorHold,CursorHoldI
+  autocmd BufReadPost,BufWritePost * GitGutter
+augroup END
 
 set mouse=a
 set number
