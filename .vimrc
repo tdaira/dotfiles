@@ -32,11 +32,18 @@ let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_document_code_action_signs_enabled = 0
 
-" Auto-close quickfix/location list after selecting an entry
-augroup auto_close_loclist
+" Quickfix/location list settings
+augroup quickfix_settings
   autocmd!
+  " Auto-close after selecting an entry
   autocmd FileType qf nnoremap <buffer> <silent> <CR> <CR>:cclose<CR>:lclose<CR>
+  " Preview with p key (without jumping)
+  autocmd FileType qf nnoremap <buffer> <silent> p <CR><C-w>p
 augroup END
+
+" Navigate quickfix entries
+nnoremap <silent> ]r :cnext<CR>
+nnoremap <silent> [r :cprevious<CR>
 
 " Git diff sign column settings
 set signcolumn=yes
