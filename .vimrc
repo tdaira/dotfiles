@@ -24,6 +24,7 @@ endfunction
 augroup lsp_install
   autocmd!
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  autocmd User lsp_setup call lsp#activate()
 augroup END
 
 " LSP performance settings
