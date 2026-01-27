@@ -38,6 +38,8 @@ colorscheme iceberg
 
 " Enable syntax color
 syntax on
+set re=0
+set redrawtime=10000
 
 " Enable clipboard
 if has('clipboard')
