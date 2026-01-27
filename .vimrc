@@ -60,6 +60,7 @@ set encoding=utf-8
 " set spelllang=en,cjk
 
 " Set color scheme
+set termguicolors
 colorscheme iceberg
 
 " Enable syntax color
