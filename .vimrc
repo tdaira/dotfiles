@@ -14,18 +14,29 @@ function! s:on_lsp_buffer_enabled() abort
   nmap <buffer> gd <plug>(lsp-definition)
   nmap <buffer> gr <plug>(lsp-references)
   nmap <buffer> gi <plug>(lsp-implementation)
-  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> <expr> gt v:count ? ":\<C-U>tabn " . v:count . "\<CR>" : "\<plug>(lsp-type-definition)"
   nmap <buffer> <leader>rn <plug>(lsp-rename)
   nmap <buffer> K <plug>(lsp-hover)
   nmap <buffer> [g <plug>(lsp-previous-diagnostic)
   nmap <buffer> ]g <plug>(lsp-next-diagnostic)
 endfunction
 
+let s:lsp_was_in_terminal = 0
+
 augroup lsp_install
   autocmd!
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
   autocmd User lsp_setup call lsp#activate()
+  autocmd WinLeave * if &buftype ==# 'terminal' | let s:lsp_was_in_terminal = 1 | endif
+  autocmd WinEnter * call s:lsp_reload_after_terminal()
 augroup END
+
+function! s:lsp_reload_after_terminal() abort
+  if s:lsp_was_in_terminal && &buftype !=# 'terminal' && &modifiable
+    let s:lsp_was_in_terminal = 0
+    silent! edit
+  endif
+endfunction
 
 " LSP performance settings
 let g:lsp_diagnostics_enabled = 1
@@ -94,4 +105,7 @@ set shiftwidth=4
 
 " Show status bar every time
 set laststatus=2
+
+" Open ctags tag in new tab with Ctrl+\
+nnoremap <C-\> <C-w><C-]><C-w>T
 
