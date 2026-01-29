@@ -81,6 +81,7 @@ set encoding=utf-8
 
 " Set color scheme
 set termguicolors
+set background=dark
 colorscheme iceberg
 
 " Enable syntax color
