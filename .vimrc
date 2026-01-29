@@ -91,7 +91,16 @@ set redrawtime=10000
 
 " Enable clipboard
 if has('clipboard')
-  if system('uname -s') == "Darwin\n"
+  if exists('$SSH_TTY')
+    " SSH: use OSC 52
+    set clipboard=unnamedplus
+    function! OSC52Copy(lines, regtype)
+      let text = join(a:lines, "\n")
+      let encoded = system('printf %s ' . shellescape(text) . ' | base64 | tr -d "\n"')
+      call writefile(["\x1b]52;c;" . encoded . "\x07"], '/dev/tty', 'b')
+    endfunction
+    autocmd TextYankPost * if v:event.operator ==# 'y' | call OSC52Copy(v:event.regcontents, v:event.regtype) | endif
+  elseif system('uname -s') == "Darwin\n"
     set clipboard=unnamed "OSX
   else
     set clipboard=unnamedplus "Linux
